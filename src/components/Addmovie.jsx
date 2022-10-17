@@ -1,28 +1,39 @@
-import { useState } from "react";
+import { useState } from 'react'
 
-function Addmovie({ addMovie }) {
-  const [moviename, setMoviename] = useState("");
+function Addmovie({ addMovie, moviename, setMoviename, fetchMovieName }) {
   function onSubmit(e) {
-    e.preventDefault();
+    e.preventDefault()
 
-    addMovie({ name: moviename, });
-
-    setMoviename("");
+    if (moviename == '') {
+      alert('type a valid text')
+      return
+    }
+    addMovie({ name: moviename })
+    setMoviename('')
   }
+  // Api call and setmoviename()
+  function fetchMovie(name) {
+    fetchMovieName()
+    setMoviename(name)
+  }
+
   return (
-    <form className="flex w-full gap-3" onSubmit={onSubmit}>
+    <form
+      className='flex w-full flex-col gap-3'
+      onSubmit={onSubmit}
+    >
       <input
-        type="text"
-        className="flex-auto border-2 p-4"
-        placeholder="Movie name.."
+        type='text'
+        className='flex-auto border-2 p-3'
+        placeholder='Movie name..'
         value={moviename}
-        onChange={(e) => setMoviename(e.target.value)}
+        onChange={(e) => fetchMovie(e.target.value)}
       />
-      <button className="bg-slate-300 p-4 px-8 font-semibold text-slate-600">
+      <button className='bg-slate-300 p-3 px-8 font-semibold text-slate-600'>
         Add
       </button>
     </form>
-  );
+  )
 }
 
-export default Addmovie;
+export default Addmovie
